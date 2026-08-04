@@ -1,0 +1,354 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+import { getSiteConfig } from '@/utils/config';
+import { Icon } from 'astro-icon';
+
+const config = getSiteConfig();
+const alumni = await getCollection('alumni');
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Profiles', href: '/alumni' },
+  { label: 'Directory' },
+];
+
+// Get unique faculties and years for filters
+const faculties = [...new Set(alumni.map(a => a.data.faculty))];
+const years = [...new Set(alumni.map(a => a.data.year))].sort((a, b) => b - a);
+---
+
+<Layout title="Alumni Directory | Sahyadri Alumni Network" description="Browse Sahyadri alumni by faculty, year, and search.">
+  
+  <!-- Breadcrumbs Area -->
+  <div class="bg-gray-50 py-3 border-b border-gray-200">
+    <div class="container-custom">
+      <Breadcrumbs items={breadcrumbItems} />
+    </div>
+  </div>
+
+  <section class="section py-12 bg-[#f0f4f8] min-h-screen">
+    <div class="container-custom">
+      
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-[#102a43] mb-4">
+          Alumni Directory
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Connect with fellow graduates from {config.organization.name}. Browse profiles by department, graduation year, or search for specific peers.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-white border border-gray-100 shadow-sm p-6 rounded-2xl text-center">
+          <div class="w-16 h-16 bg-[#2a4365] rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <Icon name="mdi:account-group" class="w-8 h-8 text-white" />
+          </div>
+          <h3 class="text-3xl font-bold text-[#102a43]">{alumni.length}</h3>
+          <p class="text-gray-500 font-medium mt-1">Total Alumni</p>
+        </div>
+        <div class="bg-white border border-gray-100 shadow-sm p-6 rounded-2xl text-center">
+          <div class="w-16 h-16 bg-[#22c55e] rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <Icon name="mdi:school" class="w-8 h-8 text-white" />
+          </div>
+          <h3 class="text-3xl font-bold text-[#102a43]">{faculties.length}</h3>
+          <p class="text-gray-500 font-medium mt-1">Departments</p>
+        </div>
+        <div class="bg-white border border-gray-100 shadow-sm p-6 rounded-2xl text-center">
+          <div class="w-16 h-16 bg-[#405a7a] rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <Icon name="mdi:calendar" class="w-8 h-8 text-white" />
+          </div>
+          <h3 class="text-3xl font-bold text-[#102a43]">{years.length}</h3>
+          <p class="text-gray-500 font-medium mt-1">Graduation Years</p>
+        </div>
+      </div>
+
+      <!-- Filters and Search -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          
+          <!-- Search -->
+          <div class="lg:col-span-2">
+            <label for="search" class="block text-sm font-bold text-[#102a43] mb-2 uppercase tracking-wider">Search Alumni</label>
+            <div class="relative w-full">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <Icon name="mdi:magnify" class="w-5 h-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                id="search"
+                class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 text-sm focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e] focus:bg-white outline-none transition-all"
+                placeholder="Search by name, faculty, or skills..."
+              />
+            </div>
+          </div>
+          
+          <!-- Faculty Filter -->
+          <div>
+            <label for="faculty-filter" class="block text-sm font-bold text-[#102a43] mb-2 uppercase tracking-wider">Department</label>
+            <select id="faculty-filter" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 text-sm focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e] focus:bg-white outline-none transition-all appearance-none cursor-pointer">
+              <option value="">All Departments</option>
+              {faculties.map((faculty) => (
+                <option value={faculty}>{faculty}</option>
+              ))}
+            </select>
+          </div>
+          
+          <!-- Year Filter -->
+          <div>
+            <label for="year-filter" class="block text-sm font-bold text-[#102a43] mb-2 uppercase tracking-wider">Graduation Year</label>
+            <select id="year-filter" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 text-sm focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e] focus:bg-white outline-none transition-all appearance-none cursor-pointer">
+              <option value="">All Years</option>
+              {years.map((year) => (
+                <option value={year}>{year}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Count & Sorting -->
+      <div class="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+        <p class="text-gray-600 font-medium">
+          Showing <span id="results-count" class="font-bold text-[#2a4365]">{alumni.length}</span> alumni records
+        </p>
+        <div class="flex items-center space-x-3">
+          <label for="sort-by" class="text-sm font-bold text-gray-500 uppercase">Sort by:</label>
+          <select id="sort-by" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 text-sm focus:ring-2 focus:ring-[#22c55e] outline-none appearance-none cursor-pointer font-medium shadow-sm">
+            <option value="name">Name (A-Z)</option>
+            <option value="year">Graduation Year (Newest)</option>
+            <option value="faculty">Department</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Alumni Grid (Populated by JS) -->
+      <div id="alumni-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+         <!-- Content injected here via JavaScript -->
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex items-center justify-center space-x-2">
+        <button id="prev-page" class="px-4 py-2 border border-gray-200 bg-white text-gray-600 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-sm flex items-center transition-colors" disabled>
+          <Icon name="mdi:chevron-left" class="w-5 h-5 mr-1" />
+          Prev
+        </button>
+        
+        <div id="page-numbers" class="flex items-center space-x-1">
+          <!-- Page numbers generated by JS -->
+        </div>
+        
+        <button id="next-page" class="px-4 py-2 border border-gray-200 bg-white text-gray-600 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-sm flex items-center transition-colors">
+          Next
+          <Icon name="mdi:chevron-right" class="w-5 h-5 ml-1" />
+        </button>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script define:vars={{
+  alumniData: alumni.map(a => ({
+    slug: a.data.slug,
+    name: a.data.name,
+    faculty: a.data.faculty,
+    year: a.data.year,
+    short_bio: a.data.short_bio,
+    photo: a.data.photo
+  })),
+  itemsPerPage: config.content.alumni_per_page || 12
+}}>
+  // Alumni data for client-side filtering
+  let currentPage = 1;
+  let filteredAlumni = [...alumniData];
+  
+  // DOM elements
+  const searchInput = document.getElementById('search');
+  const facultyFilter = document.getElementById('faculty-filter');
+  const yearFilter = document.getElementById('year-filter');
+  const sortSelect = document.getElementById('sort-by');
+  const alumniGrid = document.getElementById('alumni-grid');
+  const resultsCount = document.getElementById('results-count');
+  const prevBtn = document.getElementById('prev-page');
+  const nextBtn = document.getElementById('next-page');
+  const pageNumbers = document.getElementById('page-numbers');
+  
+  // Filter and search functionality
+  function filterAlumni() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const facultyValue = facultyFilter.value;
+    const yearValue = yearFilter.value;
+    
+    filteredAlumni = alumniData.filter(alum => {
+      const matchesSearch = alum.name.toLowerCase().includes(searchTerm) ||
+                            alum.faculty.toLowerCase().includes(searchTerm) ||
+                            (alum.short_bio && alum.short_bio.toLowerCase().includes(searchTerm));
+      const matchesFaculty = !facultyValue || alum.faculty === facultyValue;
+      const matchesYear = !yearValue || alum.year.toString() === yearValue;
+      
+      return matchesSearch && matchesFaculty && matchesYear;
+    });
+    
+    // Sort alumni
+    const sortBy = sortSelect.value;
+    filteredAlumni.sort((a, b) => {
+      switch (sortBy) {
+        case 'name':
+          return a.name.localeCompare(b.name);
+        case 'year':
+          return b.year - a.year;
+        case 'faculty':
+          return a.faculty.localeCompare(b.faculty);
+        default:
+          return 0;
+      }
+    });
+    
+    currentPage = 1;
+    updateDisplay();
+  }
+  
+  // Update display with pagination
+  function updateDisplay() {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentAlumni = filteredAlumni.slice(startIndex, endIndex);
+    
+    // Update results count
+    if (resultsCount) {
+      resultsCount.textContent = filteredAlumni.length.toString();
+    }
+    
+    // Update grid
+    if (alumniGrid) {
+      if(currentAlumni.length === 0) {
+        alumniGrid.innerHTML = `
+          <div class="col-span-full text-center py-12 bg-white rounded-xl border border-gray-100 shadow-sm">
+            <svg class="w-16 h-16 text-[#22c55e] mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h3 class="text-xl font-bold text-[#102a43] mb-2">No Profiles Found</h3>
+            <p class="text-gray-500">Try adjusting your filters or search terms.</p>
+          </div>
+        `;
+      } else {
+        alumniGrid.innerHTML = currentAlumni.map(alum => {
+          const initials = alum.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0,2);
+          const photoHtml = alum.photo 
+            ? `<img src="${alum.photo}" alt="${alum.name}" class="w-24 h-24 rounded-full object-cover border-4 border-[#f0f4f8] mx-auto mb-4 shadow-sm" loading="lazy" />` 
+            : `<div class="w-24 h-24 rounded-full bg-[#2a4365] text-white flex items-center justify-center text-3xl font-bold border-4 border-[#f0f4f8] mx-auto mb-4 shadow-sm">${initials}</div>`;
+            
+          return `
+            <a href="/alumni/profiles/${alum.slug}" class="group bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all p-6 text-center block relative overflow-hidden flex flex-col h-full">
+              
+              <div class="absolute top-3 right-3">
+                <span class="bg-[#22c55e] text-white text-xs px-2 py-1 rounded-full shadow-sm font-semibold">${alum.year}</span>
+              </div>
+              
+              ${photoHtml}
+              
+              <h3 class="text-lg font-bold text-[#102a43] group-hover:text-[#22c55e] transition-colors mb-1 line-clamp-1">${alum.name}</h3>
+              <p class="text-[#2a4365] text-sm font-semibold mb-3 line-clamp-1">${alum.faculty}</p>
+              
+              <p class="text-gray-600 text-sm mb-4 line-clamp-2 flex-grow">${alum.short_bio || ''}</p>
+              
+              <div class="mt-auto pt-4 border-t border-gray-100 flex items-center justify-center w-full">
+                <span class="text-[#2a4365] group-hover:text-[#22c55e] font-bold text-sm inline-flex items-center transition-colors">
+                  View Profile 
+                  <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </span>
+              </div>
+            </a>
+          `;
+        }).join('');
+      }
+    }
+    
+    updatePagination();
+  }
+  
+  // Update pagination controls
+  function updatePagination() {
+    const totalPages = Math.ceil(filteredAlumni.length / itemsPerPage);
+    
+    // Update prev/next buttons
+    if (prevBtn) prevBtn.disabled = currentPage === 1 || totalPages === 0;
+    if (nextBtn) nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+    
+    // Update page numbers
+    if (pageNumbers) {
+      pageNumbers.innerHTML = '';
+      
+      for (let i = 1; i <= totalPages; i++) {
+        // Only show a few pages to avoid overflow
+        if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+          const pageBtn = document.createElement('button');
+          const isActive = i === currentPage;
+          
+          pageBtn.className = `w-10 h-10 rounded-lg text-sm font-bold transition-colors duration-200 shadow-sm border ${
+            isActive 
+              ? 'bg-[#2a4365] text-white border-[#2a4365]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:text-[#2a4365] hover:border-[#2a4365]'
+          }`;
+          pageBtn.textContent = i.toString();
+          pageBtn.addEventListener('click', () => {
+            currentPage = i;
+            updateDisplay();
+            window.scrollTo({ top: document.getElementById('alumni-grid').offsetTop - 100, behavior: 'smooth' });
+          });
+          pageNumbers.appendChild(pageBtn);
+        } else if (i === currentPage - 2 || i === currentPage + 2) {
+          const ellipsis = document.createElement('span');
+          ellipsis.className = 'w-8 text-center text-gray-400';
+          ellipsis.textContent = '...';
+          pageNumbers.appendChild(ellipsis);
+        }
+      }
+    }
+  }
+  
+  // Event listeners
+  searchInput?.addEventListener('input', filterAlumni);
+  facultyFilter?.addEventListener('change', filterAlumni);
+  yearFilter?.addEventListener('change', filterAlumni);
+  sortSelect?.addEventListener('change', filterAlumni);
+  
+  prevBtn?.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      updateDisplay();
+      window.scrollTo({ top: document.getElementById('alumni-grid').offsetTop - 100, behavior: 'smooth' });
+    }
+  });
+  
+  nextBtn?.addEventListener('click', () => {
+    const totalPages = Math.ceil(filteredAlumni.length / itemsPerPage);
+    if (currentPage < totalPages) {
+      currentPage++;
+      updateDisplay();
+      window.scrollTo({ top: document.getElementById('alumni-grid').offsetTop - 100, behavior: 'smooth' });
+    }
+  });
+  
+  // Initialize display
+  // Use a slight timeout to ensure DOM is fully ready
+  setTimeout(() => {
+    // Check if there are URL parameters for initial filtering (optional enhancement)
+    const urlParams = new URLSearchParams(window.location.search);
+    const yearParam = urlParams.get('year');
+    const facultyParam = urlParams.get('faculty');
+    
+    if (yearParam && yearFilter) {
+      yearFilter.value = yearParam;
+    }
+    if (facultyParam && facultyFilter) {
+      facultyFilter.value = facultyParam;
+    }
+    
+    if (yearParam || facultyParam) {
+      filterAlumni();
+    } else {
+      updateDisplay();
+    }
+  }, 100);
+</script>

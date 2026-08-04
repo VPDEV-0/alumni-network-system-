@@ -1,0 +1,92 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+import { getSiteConfig } from '@/utils/config';
+
+export async function getStaticPaths() {
+  const config = getSiteConfig();
+  return config.faculties.map(f => ({ params: { faculty: f.slug }, props: { faculty: f.slug } }));
+}
+
+const config = getSiteConfig();
+const { faculty } = Astro.props as { faculty: string };
+const alumni = (await getCollection('alumni')).filter(a => a.data.faculty.toLowerCase().includes(faculty.toLowerCase()));
+const facultyName = config.faculties.find(f => f.slug === faculty)?.name || faculty;
+
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Profiles', href: '/alumni' },
+  { label: 'Faculties', href: '/alumni/faculties' },
+  { label: facultyName },
+];
+---
+
+<Layout title={`${facultyName} Alumni | Sahyadri Alumni Network`}>
+  
+  <!-- Page Header -->
+  <section class="bg-gradient-to-r from-[#0b1e36] to-[#2a4365] text-white py-12">
+    <div class="container-custom text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">{facultyName}</h1>
+      <p class="text-xl text-gray-200 max-w-2xl mx-auto">
+        Browse our esteemed alumni from the {facultyName} department.
+      </p>
+    </div>
+  </section>
+
+  <!-- Breadcrumbs Area -->
+  <div class="bg-gray-50 py-3 border-b border-gray-200">
+    <div class="container-custom">
+      <Breadcrumbs items={breadcrumbItems} />
+    </div>
+  </div>
+
+  <section class="section py-12 bg-[#f0f4f8] min-h-screen">
+    <div class="container-custom">
+      
+      <!-- Alumni Grid -->
+      {alumni.length > 0 ? (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {alumni.map(a => (
+            <a href={`/alumni/profiles/${a.data.slug}`} class="group bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all block overflow-hidden p-6">
+              <div class="flex items-center gap-4 mb-4">
+                
+                {/* Profile Photo or Initials Fallback */}
+                {a.data.photo ? (
+                  <img src={a.data.photo} alt={a.data.name} class="w-16 h-16 rounded-full object-cover border-2 border-[#2a4365] shadow-sm" />
+                ) : (
+                  <div class="w-16 h-16 rounded-full bg-[#2a4365] text-white flex items-center justify-center text-xl font-bold border-2 border-[#22c55e] shadow-sm">
+                    {a.data.name.split(" ").map((n: string) => n[0]).join("").toUpperCase()}
+                  </div>
+                )}
+                
+                <div>
+                  <h3 class="text-lg font-bold text-[#102a43] group-hover:text-[#22c55e] transition-colors">{a.data.name}</h3>
+                  <p class="text-sm font-semibold text-[#2a4365]">{a.data.faculty}</p>
+                  <p class="text-xs font-medium text-gray-500 mt-1">Class of {a.data.year}</p>
+                </div>
+              </div>
+              <p class="text-gray-600 text-sm line-clamp-3">{a.data.short_bio}</p>
+            </a>
+          ))}
+        </div>
+      ) : (
+        
+        <!-- Empty State -->
+        <div class="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100 max-w-2xl mx-auto">
+          <div class="mb-6">
+            <svg class="w-16 h-16 text-[#22c55e] mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-[#102a43] mb-2">No Alumni Found</h3>
+          <p class="text-gray-600 mb-8">We don't have any alumni records for the {facultyName} faculty yet.</p>
+          <a href="/alumni/profiles" class="bg-[#2a4365] text-white hover:bg-[#102a43] px-6 py-3 rounded-lg font-bold transition-colors inline-flex items-center">
+            Browse All Alumni
+          </a>
+        </div>
+      )}
+      
+    </div>
+  </section>
+</Layout>

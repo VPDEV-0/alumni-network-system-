@@ -1,0 +1,173 @@
+# Site Information
+site:
+  name: "Sahyadri Alumni Network"
+  description: "The official alumni portal for Sahyadri College of Engineering & Management to bridge the gap between current students, faculty, and alumni."
+  url: "https://sahyadri-alumni-network.vercel.app"
+  logo: "/logo.png"
+  favicon: "/favicon.ico"
+  hero_image: "/hero-bg.jpg"
+
+# Organization Details
+organization:
+  name: "Sahyadri College of Engineering & Management"
+  website: "https://www.sahyadri.edu.in"
+  email: "contact@sahyadri.edu.in"
+  address: "Sahyadri Campus, Adyar, Mangaluru - 575007, Karnataka, India"
+
+# Color Scheme (CSS Variables)
+colors:
+  primary:
+    50: "#f0f4f8"
+    100: "#d9e2ec"
+    200: "#bcccdc"
+    300: "#9fb3c8"
+    400: "#829ab1"
+    500: "#2a4365"
+    600: "#243b53"
+    700: "#102a43"
+    800: "#0b1e36"
+    900: "#061324"
+  secondary:
+    50: "#f0fdf4"
+    100: "#dcfce7"
+    200: "#bbf7d0"
+    300: "#86efac"
+    400: "#4ade80"
+    500: "#22c55e"
+    600: "#16a34a"
+    700: "#15803d"
+    800: "#166534"
+    900: "#14532d"
+  accent:
+    50: "#fafafa"
+    100: "#f5f5f5"
+    200: "#e5e5e5"
+    300: "#d4d4d4"
+    400: "#a3a3a3"
+    500: "#737373"
+    600: "#525252"
+    700: "#404040"
+    800: "#262626"
+    900: "#171717"
+
+# Navigation Menu
+navigation:
+  - label: "Home"
+    url: "/"
+    icon: "home"
+  - label: "Alumni Directory"
+    url: "/alumni/profiles"
+    icon: "users"
+    mega_menu: true
+    submenu:
+      - label: "By Year"
+        url: "/alumni/years"
+        icon: "calendar"
+      - label: "By Faculty"
+        url: "/alumni/faculties"
+        icon: "graduation-cap"
+  - label: "Events"
+    url: "/events"
+    icon: "calendar"
+  - label: "Blog"
+    url: "/blog"
+    icon: "newspaper"
+  - label: "About"
+    url: "/about"
+    icon: "info-circle"
+
+# Faculty/Department Configuration
+faculties:
+  - name: "Artificial Intelligence & ML"
+    slug: "aiml"
+    description: "CS&E (Artificial Intelligence & Machine Learning) graduates"
+    icon: "cpu"
+    color: "#2a4365"
+  - name: "Computer Science"
+    slug: "cs"
+    description: "Computer Science and Engineering graduates"
+    icon: "code"
+    color: "#22c55e"
+  - name: "Information Science"
+    slug: "is"
+    description: "Information Science and Engineering graduates"
+    icon: "database"
+    color: "#f59e0b"
+  - name: "Electronics & Communication"
+    slug: "ec"
+    description: "Electronics and Communication Engineering graduates"
+    icon: "microchip"
+    color: "#8b5cf6"
+  - name: "Mechanical & Robotics"
+    slug: "mechanical"
+    description: "Mechanical and Robotics Engineering graduates"
+    icon: "cog"
+    color: "#ef4444"
+  - name: "Business Administration"
+    slug: "mba"
+    description: "MBA & BBA graduates"
+    icon: "briefcase"
+    color: "#3b82f6"
+
+# Year Range Configuration
+years:
+  start: 2007
+  end: 2026
+  current_year: 2026
+
+# Social Media Links
+social_links:
+  - name: "GitHub"
+    url: "https://github.com"
+    icon: "github"
+    color: "#171515"
+  - name: "LinkedIn"
+    url: "https://linkedin.com"
+    icon: "linkedin"
+    color: "#0077b5"
+  - name: "Twitter"
+    url: "https://twitter.com"
+    icon: "twitter"
+    color: "#1da1f2"
+  - name: "Facebook"
+    url: "https://facebook.com"
+    icon: "facebook"
+    color: "#1877f2"
+
+# SEO Configuration
+seo:
+  title_template: "%s | Sahyadri Alumni Network"
+  default_description: "Connect with alumni from your institution. Join our network and stay updated with events, news, and opportunities."
+  keywords: ["alumni", "portal", "network", "community", "education", "graduates"]
+  author: "Sahyadri College"
+  og_image: "/og-image.jpg"
+  twitter_card: "summary_large_image"
+
+# Content Configuration
+content:
+  posts_per_page: 12
+  alumni_per_page: 3
+  events_per_page: 10
+  featured_alumni_count: 3
+  latest_events_count: 4
+
+# Features
+features:
+  search: true
+  filters: true
+  pagination: true
+  tags: true
+  categories: true
+  social_sharing: true
+  contact_forms: true
+  newsletter: true
+  alumni_registration:
+    enabled: false
+    url: "/alumni/register"
+
+# Contact Information
+contact:
+  email: "contact@sahyadri.edu.in"
+  phone: "+91 824 2277222"
+  address: "Sahyadri Campus, Adyar, Mangaluru - 575007, Karnataka, India"
+  office_hours: "Monday - Saturday, 9:00 AM - 5:00 PM"

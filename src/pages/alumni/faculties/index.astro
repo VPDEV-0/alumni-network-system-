@@ -1,0 +1,68 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getSiteConfig } from '@/utils/config';
+import { Icon } from 'astro-icon';
+
+const config = getSiteConfig();
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Profiles', href: '/alumni' },
+  { label: 'Faculties' },
+];
+---
+
+<Layout title="Browse by Faculty | Sahyadri Alumni Network" description="Explore our alumni network organized by department and faculty.">
+  
+  <!-- Page Header -->
+  <section class="bg-gradient-to-r from-[#0b1e36] to-[#2a4365] text-white py-12">
+    <div class="container-custom text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Browse by Faculty</h1>
+      <p class="text-xl text-gray-200 max-w-2xl mx-auto">
+        Explore our alumni network organized by department.
+      </p>
+    </div>
+  </section>
+
+  <!-- Breadcrumbs Area -->
+  <div class="bg-gray-50 py-3 border-b border-gray-200">
+    <div class="container-custom">
+      <Breadcrumbs items={breadcrumbItems} />
+    </div>
+  </div>
+
+  <section class="section py-12 bg-[#f0f4f8] min-h-screen">
+    <div class="container-custom">
+      
+      <!-- Faculties Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {config.faculties.map(f => (
+          <a href={`/alumni/faculties/${f.slug}`} class="group bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all p-8 flex flex-col items-center text-center">
+            
+            <!-- Faculty Icon -->
+            <div class="w-20 h-20 bg-[#f0f4f8] group-hover:bg-[#22c55e] text-[#2a4365] group-hover:text-white rounded-full flex items-center justify-center mb-6 transition-colors duration-300 shadow-sm border border-gray-100 group-hover:border-[#22c55e]">
+              <Icon name={f.icon ? `mdi:${f.icon}` : 'mdi:school'} class="w-10 h-10" />
+            </div>
+            
+            <!-- Faculty Info -->
+            <h3 class="text-xl font-bold text-[#102a43] group-hover:text-[#22c55e] transition-colors mb-3">
+              {f.name}
+            </h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              {f.description}
+            </p>
+            
+            <!-- Call to Action -->
+            <div class="mt-6 pt-4 border-t border-gray-100 w-full">
+              <span class="text-[#2a4365] group-hover:text-[#22c55e] font-bold inline-flex items-center text-sm transition-colors">
+                View Graduates
+                <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+      
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,242 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon';
+import { getSiteConfig } from '@/utils/config';
+
+export async function getStaticPaths() {
+  const alumni = await getCollection('alumni');
+  return alumni.map(a => ({ params: { slug: a.data.slug }, props: { alum: a.data } }));
+}
+
+const config = getSiteConfig();
+const { alum } = Astro.props as { alum: any };
+
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Directory', href: '/alumni/profiles' },
+  { label: alum.name },
+];
+
+const socials = alum.social || {};
+
+// If you have a Google Form URL for mentorship requests, you can use the one from config, or hardcode it here.
+const connectUrl = config.features.alumni_registration.url || "#";
+---
+
+<Layout title={`${alum.name} | Sahyadri Alumni Network`} description={alum.short_bio}>
+  
+  <!-- Breadcrumbs Area -->
+  <div class="bg-gray-50 py-3 border-b border-gray-200">
+    <div class="container-custom">
+      <Breadcrumbs items={breadcrumbItems} />
+    </div>
+  </div>
+
+  <section class="section py-12 bg-[#f0f4f8] min-h-screen">
+    <div class="container-custom max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Sidebar (Profile Card) -->
+        <aside class="lg:col-span-1">
+          <div class="bg-white shadow-sm hover:shadow-md border border-gray-100 rounded-2xl p-8 text-center sticky top-28 transition-shadow">
+            
+            <div class="relative inline-block mb-4">
+              {alum.photo ? (
+                <img 
+                  src={alum.photo} 
+                  alt={alum.name} 
+                  class="w-40 h-40 rounded-full object-cover border-4 border-[#f0f4f8] shadow-md mx-auto" 
+                />
+              ) : (
+                <div class="w-40 h-40 rounded-full bg-[#2a4365] text-white flex items-center justify-center text-4xl font-bold border-4 border-[#f0f4f8] shadow-md mx-auto">
+                  {alum.name.split(" ").map((n: string) => n[0]).join("").toUpperCase()}
+                </div>
+              )}
+              {/* Mentorship Badge */}
+              <div class="absolute bottom-0 right-2 bg-[#22c55e] text-white w-8 h-8 rounded-full flex items-center justify-center shadow-sm border-2 border-white" title="Open to Mentoring">
+                 <Icon name="mdi:handshake" class="w-4 h-4" />
+              </div>
+            </div>
+
+            <h1 class="text-2xl font-bold text-[#102a43]">{alum.name}</h1>
+            <p class="text-[#2a4365] font-semibold mt-1">{alum.faculty}</p>
+            <p class="text-gray-500 text-sm font-medium mt-1">Class of {alum.year}</p>
+
+            <!-- HACKATHON FEATURE: Connect Button -->
+            <div class="mt-6">
+              <a href={connectUrl} target="_blank" rel="noopener noreferrer" class="w-full bg-[#2a4365] text-white hover:bg-[#102a43] py-3 rounded-lg font-bold flex items-center justify-center transition-colors shadow-sm">
+                <Icon name="mdi:email-fast" class="w-5 h-5 mr-2" />
+                Request Connection
+              </a>
+            </div>
+
+            <div class="mt-8 space-y-4 text-sm text-left border-t border-gray-100 pt-6">
+              {alum.position && (
+                <div class="flex items-start">
+                  <Icon name="mdi:briefcase" class="w-5 h-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span class="block font-semibold text-gray-900">Role</span>
+                    <span class="text-gray-600">{alum.position}</span>
+                  </div>
+                </div>
+              )}
+              {alum.company && (
+                <div class="flex items-start">
+                  <Icon name="mdi:domain" class="w-5 h-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span class="block font-semibold text-gray-900">Company</span>
+                    <span class="text-gray-600">{alum.company}</span>
+                  </div>
+                </div>
+              )}
+              {alum.location && (
+                <div class="flex items-start">
+                  <Icon name="mdi:map-marker" class="w-5 h-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span class="block font-semibold text-gray-900">Location</span>
+                    <span class="text-gray-600">{alum.location}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {Object.values(socials).some(Boolean) && (
+              <div class="mt-8 pt-6 border-t border-gray-100 flex justify-center gap-4">
+                {socials.linkedin && (
+                  <a href={socials.linkedin} target="_blank" class="w-10 h-10 rounded-full bg-[#f0f4f8] flex items-center justify-center text-[#2a4365] hover:bg-[#0077b5] hover:text-white transition-colors">
+                    <Icon name="mdi:linkedin" class="w-5 h-5" />
+                  </a>
+                )}
+                {socials.github && (
+                  <a href={socials.github} target="_blank" class="w-10 h-10 rounded-full bg-[#f0f4f8] flex items-center justify-center text-[#2a4365] hover:bg-[#24292e] hover:text-white transition-colors">
+                    <Icon name="mdi:github" class="w-5 h-5" />
+                  </a>
+                )}
+                {socials.twitter && (
+                  <a href={socials.twitter} target="_blank" class="w-10 h-10 rounded-full bg-[#f0f4f8] flex items-center justify-center text-[#2a4365] hover:bg-[#1da1f2] hover:text-white transition-colors">
+                    <Icon name="mdi:twitter" class="w-5 h-5" />
+                  </a>
+                )}
+                {socials.portfolio && (
+                  <a href={socials.portfolio} target="_blank" class="w-10 h-10 rounded-full bg-[#f0f4f8] flex items-center justify-center text-[#2a4365] hover:bg-[#22c55e] hover:text-white transition-colors">
+                    <Icon name="mdi:web" class="w-5 h-5" />
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="lg:col-span-2 space-y-6">
+          
+          <!-- About -->
+          <section class="bg-white shadow-sm hover:shadow-md border border-gray-100 rounded-2xl p-8 transition-shadow">
+            <h2 class="text-xl font-bold text-[#102a43] mb-4 flex items-center">
+              <Icon name="mdi:account-details" class="w-6 h-6 mr-2 text-[#22c55e]" />
+              About
+            </h2>
+            <p class="text-gray-700 leading-relaxed whitespace-pre-line">{alum.long_bio || alum.short_bio || 'No biography provided.'}</p>
+          </section>
+
+          <!-- Skills -->
+          {alum.skills?.length > 0 && (
+            <section class="bg-white shadow-sm hover:shadow-md border border-gray-100 rounded-2xl p-8 transition-shadow">
+              <h2 class="text-xl font-bold text-[#102a43] mb-4 flex items-center">
+                <Icon name="mdi:star-circle" class="w-6 h-6 mr-2 text-[#22c55e]" />
+                Expertise & Skills
+              </h2>
+              <div class="flex flex-wrap gap-2">
+                {alum.skills.map((skill: string) => (
+                  <span class="bg-[#f0f4f8] text-[#2a4365] px-4 py-2 rounded-lg text-sm font-semibold border border-gray-200 hover:border-[#22c55e] transition-colors">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <!-- Work Experience -->
+          {alum.work_experience?.length > 0 && (
+            <section class="bg-white shadow-sm hover:shadow-md border border-gray-100 rounded-2xl p-8 transition-shadow">
+              <h2 class="text-xl font-bold text-[#102a43] mb-6 flex items-center">
+                <Icon name="mdi:office-building" class="w-6 h-6 mr-2 text-[#22c55e]" />
+                Professional Experience
+              </h2>
+              <div class="space-y-6">
+                {alum.work_experience.map((exp: any, index: number) => (
+                  <div class={`relative ${index !== alum.work_experience.length - 1 ? 'pb-6 border-b border-gray-100' : ''}`}>
+                    <h3 class="font-bold text-[#102a43] text-lg">{exp.position}</h3>
+                    <div class="flex items-center text-[#2a4365] font-medium text-sm mt-1 mb-2">
+                      <Icon name="mdi:domain" class="w-4 h-4 mr-1" />
+                      {exp.company}
+                      <span class="mx-2 text-gray-300">•</span>
+                      <Icon name="mdi:calendar-clock" class="w-4 h-4 mr-1 text-gray-400" />
+                      <span class="text-gray-500">{exp.duration}</span>
+                    </div>
+                    <p class="text-gray-700 text-sm leading-relaxed">{exp.description}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <!-- Education -->
+          {alum.education?.length > 0 && (
+            <section class="bg-white shadow-sm hover:shadow-md border border-gray-100 rounded-2xl p-8 transition-shadow">
+              <h2 class="text-xl font-bold text-[#102a43] mb-6 flex items-center">
+                <Icon name="mdi:school" class="w-6 h-6 mr-2 text-[#22c55e]" />
+                Education
+              </h2>
+              <div class="space-y-6">
+                {alum.education.map((ed: any, index: number) => (
+                  <div class={`relative ${index !== alum.education.length - 1 ? 'pb-6 border-b border-gray-100' : ''}`}>
+                    <h3 class="font-bold text-[#102a43] text-lg">{ed.degree}</h3>
+                    <div class="flex items-center text-[#2a4365] font-medium text-sm mt-1 mb-2">
+                      <Icon name="mdi:bank" class="w-4 h-4 mr-1" />
+                      {ed.institution}
+                      <span class="mx-2 text-gray-300">•</span>
+                      <span class="text-gray-500">Class of {ed.year}</span>
+                    </div>
+                    {ed.gpa && (
+                      <span class="inline-block bg-[#f0f4f8] text-[#2a4365] px-2 py-1 rounded text-xs font-bold mt-1">
+                        GPA: {ed.gpa}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <!-- Projects -->
+          {alum.projects?.length > 0 && (
+            <section class="bg-white shadow-sm hover:shadow-md border border-gray-100 rounded-2xl p-8 transition-shadow">
+              <h2 class="text-xl font-bold text-[#102a43] mb-6 flex items-center">
+                <Icon name="mdi:code-braces" class="w-6 h-6 mr-2 text-[#22c55e]" />
+                Featured Projects
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {alum.projects.map((project: any) => (
+                  <div class="bg-[#f0f4f8] rounded-xl p-5 border border-gray-200">
+                    <h3 class="font-bold text-[#102a43] mb-2">{project.name}</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">{project.description}</p>
+                    {project.url && (
+                      <a href={project.url} target="_blank" class="inline-flex items-center text-sm font-bold text-[#2a4365] hover:text-[#22c55e] transition-colors">
+                        View Project
+                        <Icon name="mdi:open-in-new" class="w-4 h-4 ml-1" />
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+        </main>
+      </div>
+    </div>
+  </section>
+</Layout>

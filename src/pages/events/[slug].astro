@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon';
+
+export async function getStaticPaths() {
+  const events = await getCollection('events');
+  return events.map(e => ({ params: { slug: e.data.slug }, props: { event: e.data } }));
+}
+
+const { event } = Astro.props as { event: any };
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Events', href: '/events' },
+  { label: event.title },
+];
+---
+
+<Layout title={`${event.title} | Sahyadri Alumni Network`} description={event.description}>
+  
+  <!-- Breadcrumbs Area -->
+  <div class="bg-gray-50 py-3 border-b border-gray-200">
+    <div class="container-custom">
+      <Breadcrumbs items={breadcrumbItems} />
+    </div>
+  </div>
+
+  <!-- Event Header -->
+  <section class="bg-gradient-to-r from-[#0b1e36] to-[#2a4365] text-white py-16">
+    <div class="container-custom max-w-6xl mx-auto">
+      <span class="inline-block bg-[#22c55e] text-white px-4 py-1 rounded-full text-xs font-bold tracking-widest mb-6 shadow-sm uppercase">
+        Event Details
+      </span>
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">{event.title}</h1>
+      <p class="text-xl text-gray-300 max-w-3xl leading-relaxed">{event.description}</p>
+    </div>
+  </section>
+
+  <!-- Event Content & Sidebar -->
+  <section class="section py-12 bg-[#f0f4f8] min-h-screen">
+    <div class="container-custom max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Main Content (Left) -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-10">
+            {event.image && (
+              <img src={event.image} alt={event.title} class="w-full h-auto max-h-[450px] object-cover rounded-xl mb-8 shadow-sm border border-gray-100" />
+            )}
+            
+            <h2 class="text-2xl font-bold text-[#102a43] mb-6 flex items-center border-b border-gray-100 pb-4">
+              <Icon name="mdi:information" class="w-6 h-6 mr-2 text-[#22c55e]" />
+              About This Event
+            </h2>
+            
+            <div class="prose prose-lg max-w-none prose-headings:text-[#102a43] prose-p:text-gray-700 prose-a:text-[#2a4365] hover:prose-a:text-[#22c55e] prose-img:rounded-xl">
+              <div>{event.content || "More details about this event will be posted soon."}</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sticky Sidebar (Right) -->
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 sticky top-28">
+            <h2 class="text-xl font-bold text-[#102a43] mb-8 flex items-center">
+              <Icon name="mdi:calendar-check" class="w-6 h-6 mr-2 text-[#22c55e]" />
+              Event Information
+            </h2>
+            
+            <ul class="space-y-6">
+              <li class="flex items-start">
+                <div class="bg-[#f0f4f8] p-3 rounded-xl mr-4 border border-gray-100">
+                  <Icon name="mdi:calendar" class="w-6 h-6 text-[#2a4365]" />
+                </div>
+                <div>
+                  <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Date</span>
+                  <span class="text-[#102a43] font-bold text-lg">{new Date(event.date).toDateString()}</span>
+                </div>
+              </li>
+              
+              {event.location && (
+                <li class="flex items-start">
+                  <div class="bg-[#f0f4f8] p-3 rounded-xl mr-4 border border-gray-100">
+                    <Icon name="mdi:map-marker" class="w-6 h-6 text-[#2a4365]" />
+                  </div>
+                  <div>
+                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Location</span>
+                    <span class="text-[#102a43] font-semibold">{event.location}</span>
+                  </div>
+                </li>
+              )}
+            </ul>
+            
+            {event.registration_url && (
+              <div class="mt-8 pt-8 border-t border-gray-100">
+                <a href={event.registration_url} target="_blank" rel="noopener noreferrer" class="w-full bg-[#22c55e] text-white hover:bg-[#16a34a] py-4 rounded-xl font-bold flex items-center justify-center transition-colors shadow-md text-lg hover:-translate-y-1 transform duration-200">
+                  <Icon name="mdi:ticket-confirmation" class="w-6 h-6 mr-2" />
+                  Register Now
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+</Layout>

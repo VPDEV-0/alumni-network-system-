@@ -1,0 +1,26 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { Icon } from 'astro-icon';
+---
+
+<Layout title="Redirecting... | Sahyadri Alumni Network">
+  <script>
+    // Redirect immediately
+    window.location.replace('/alumni/profiles');
+  </script>
+  
+  <section class="min-h-[70vh] bg-[#f0f4f8] flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center max-w-md w-full">
+      <!-- Animated loading spinner -->
+      <Icon name="mdi:loading" class="w-12 h-12 text-[#22c55e] animate-spin mx-auto mb-4" />
+      
+      <h1 class="text-2xl font-bold text-[#102a43] mb-2">Redirecting...</h1>
+      <p class="text-gray-600">
+        Taking you to the Alumni Directory. 
+        <br /><br />
+        If you are not redirected automatically, 
+        <a href="/alumni/profiles" class="text-[#2a4365] hover:text-[#22c55e] font-bold transition-colors underline">click here</a>.
+      </p>
+    </div>
+  </section>
+</Layout>

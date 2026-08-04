@@ -1,0 +1,245 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteConfig } from '../utils/config';
+
+const config = getSiteConfig();
+---
+
+<Layout title="About | Sahyadri Alumni Network" description="Learn about the Sahyadri College of Engineering & Management alumni network and our mission.">
+  <!-- Page Header -->
+  <section class="bg-gradient-to-r from-[#0b1e36] to-[#2a4365] text-white py-16">
+    <div class="container-custom text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">About Our Alumni Network</h1>
+      <p class="text-xl text-gray-200 max-w-3xl mx-auto">
+        Building bridges between past, present, and future generations of Sahyadri graduates.
+      </p>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section class="bg-gray-50 py-4 border-b border-gray-200">
+    <div class="container-custom">
+      <nav class="flex" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2">
+          <li>
+            <a href="/" class="text-gray-500 hover:text-[#22c55e] transition-colors font-medium">Home</a>
+          </li>
+          <li class="flex items-center">
+            <svg class="w-4 h-4 text-gray-400 mx-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="text-[#2a4365] font-bold">About</span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="section py-16">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold mb-6 text-[#102a43]">Our Mission</h2>
+          <p class="text-lg text-gray-600 mb-6">
+            The Sahyadri Alumni Network is dedicated to fostering lifelong connections between graduates, 
+            creating opportunities for collaboration, mentorship, and professional growth within our 
+            diverse community of engineers and managers.
+          </p>
+          <p class="text-lg text-gray-600 mb-6">
+            We believe that the strength of our network lies in the collective wisdom, experience, 
+            and achievements of our members. By providing a platform for meaningful engagement, 
+            we empower our alumni to support each other's success and contribute to the advancement 
+            of their respective fields.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 mt-8">
+            <div class="flex items-center text-[#2a4365] bg-[#f0f4f8] px-4 py-2 rounded-lg font-semibold">
+              <svg class="w-6 h-6 mr-2 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Professional Networking</span>
+            </div>
+            <div class="flex items-center text-[#2a4365] bg-[#f0f4f8] px-4 py-2 rounded-lg font-semibold">
+              <svg class="w-6 h-6 mr-2 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Mentorship Programs</span>
+            </div>
+          </div>
+        </div>
+        <div class="relative mt-8 lg:mt-0">
+          <div class="bg-gradient-to-br from-[#102a43] to-[#2a4365] rounded-2xl p-8 shadow-xl border border-white/10">
+            <div class="text-center">
+              <div class="w-20 h-20 mx-auto mb-6 bg-[#22c55e] rounded-full flex items-center justify-center shadow-lg">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-white mb-2">Building Connections</h3>
+              <p class="text-gray-300">
+                Connecting Sahyadri alumni across generations, industries, and geographical boundaries.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="section py-16 bg-[#f0f4f8]">
+    <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-[#102a43]">Our Core Values</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          The principles that guide our community and shape our collective future.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Value 1 -->
+        <div class="bg-white rounded-xl text-center p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div class="w-16 h-16 mx-auto mb-6 bg-[#f0f4f8] rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-[#2a4365]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#102a43] mb-4">Community First</h3>
+          <p class="text-gray-600 text-sm">
+            We prioritize the well-being and success of our community members, fostering an environment 
+            of mutual support and collaboration.
+          </p>
+        </div>
+
+        <!-- Value 2 -->
+        <div class="bg-white rounded-xl text-center p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div class="w-16 h-16 mx-auto mb-6 bg-[#dcfce7] rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#102a43] mb-4">Excellence</h3>
+          <p class="text-gray-600 text-sm">
+            We strive for excellence in everything we do, encouraging our members to pursue their 
+            passions and achieve their highest potential in the tech industry.
+          </p>
+        </div>
+
+        <!-- Value 3 -->
+        <div class="bg-white rounded-xl text-center p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div class="w-16 h-16 mx-auto mb-6 bg-[#f0f4f8] rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-[#2a4365]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#102a43] mb-4">Innovation</h3>
+          <p class="text-gray-600 text-sm">
+            We embrace innovation and creativity, supporting our members in developing new ideas 
+            and pushing the boundaries of modern engineering.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leadership Section -->
+  <section class="section py-16">
+    <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-[#102a43]">Our Leadership</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          The dedicated teams supporting the Sahyadri Alumni Network.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Team Member 1 -->
+        <div class="bg-white rounded-xl text-center p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#102a43] to-[#2a4365] flex items-center justify-center text-white text-2xl font-bold shadow-md">
+            SC
+          </div>
+          <h3 class="text-xl font-bold text-[#102a43] mb-2">Sahyadri College</h3>
+          <p class="text-[#22c55e] font-semibold mb-3">Institution</p>
+          <p class="text-gray-600 text-sm mb-4">
+            Sahyadri College of Engineering & Management provides world-class education and serves as the foundation for our growing network.
+          </p>
+          <div class="flex justify-center space-x-3 mt-auto">
+            <a href="https://www.sahyadri.edu.in" target="_blank" class="text-[#2a4365] hover:text-[#22c55e] transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="bg-white rounded-xl text-center p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#22c55e] to-[#16a34a] flex items-center justify-center text-white text-2xl font-bold shadow-md">
+            AC
+          </div>
+          <h3 class="text-xl font-bold text-[#102a43] mb-2">Alumni Committee</h3>
+          <p class="text-[#2a4365] font-semibold mb-3">Network Drivers</p>
+          <p class="text-gray-600 text-sm mb-4">
+            A dedicated group of former students working tirelessly to keep the Sahyadri spirit alive globally through events and mentorship.
+          </p>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="bg-white rounded-xl text-center p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#405a7a] to-[#2a4365] flex items-center justify-center text-white text-2xl font-bold shadow-md">
+            DF
+          </div>
+          <h3 class="text-xl font-bold text-[#102a43] mb-2">Department Faculty</h3>
+          <p class="text-[#22c55e] font-semibold mb-3">Mentors & Guides</p>
+          <p class="text-gray-600 text-sm mb-4">
+            Our esteemed faculty members who continue to support, advise, and guide graduates long after they leave the campus.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Get Involved Section -->
+  <section class="section py-16 bg-gradient-to-br from-[#0b1e36] to-[#2a4365] text-white">
+    <div class="container-custom text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Get Involved</h2>
+      <p class="text-xl mb-8 max-w-3xl mx-auto text-gray-200">
+        Whether you want to reconnect with old friends, mentor current students, or attend our annual tech events, there are many ways to give back.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="bg-white/10 rounded-xl p-6 border border-white/5 backdrop-blur-sm">
+          <h3 class="text-xl font-bold mb-3 text-[#22c55e]">Join the Directory</h3>
+          <p class="text-gray-200 text-sm">
+            Create your profile to connect with fellow graduates and stay updated on career opportunities.
+          </p>
+        </div>
+        <div class="bg-white/10 rounded-xl p-6 border border-white/5 backdrop-blur-sm">
+          <h3 class="text-xl font-bold mb-3 text-[#22c55e]">Mentor Students</h3>
+          <p class="text-gray-200 text-sm">
+            Guide the next generation of Sahyadri engineers by sharing your industry experience and insights.
+          </p>
+        </div>
+        <div class="bg-white/10 rounded-xl p-6 border border-white/5 backdrop-blur-sm">
+          <h3 class="text-xl font-bold mb-3 text-[#22c55e]">Attend Reunions</h3>
+          <p class="text-gray-200 text-sm">
+            Come back to campus for our annual meets, hackathons, and exclusive networking events.
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/alumni/profiles" class="bg-[#22c55e] text-white hover:bg-[#16a34a] px-8 py-4 rounded-lg font-bold inline-flex items-center justify-center transition-colors shadow-lg">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+          Browse Network
+        </a>
+        <a href="/contact" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#102a43] px-8 py-4 rounded-lg font-bold inline-flex items-center justify-center transition-colors shadow-lg">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

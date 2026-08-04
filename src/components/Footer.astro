@@ -1,0 +1,166 @@
+---
+import { getSiteConfig } from '../utils/config';
+import { Icon } from 'astro-icon';
+
+const config = getSiteConfig();
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-[#0b1e36] text-white border-t-4 border-[#22c55e]">
+  <div class="container-custom py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <!-- Organization Info -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center space-x-3 mb-6">
+            <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow-lg overflow-hidden p-1">
+            {config.site.logo ? (
+              <img src={config.site.logo} alt={`${config.site.name} logo`} class="w-full h-full object-contain" />
+            ) : (
+              <Icon name="mdi:school" class="w-8 h-8 text-[#2a4365]" />
+            )}
+            </div>
+          <div>
+            <h3 class="text-2xl font-bold text-white">{config.site.name}</h3>
+            <p class="text-gray-400 text-sm font-medium">Official Portal</p>
+          </div>
+        </div>
+        <p class="text-gray-400 mb-6 leading-relaxed max-w-md">
+          {config.site.description}
+        </p>
+        <div class="flex space-x-4">
+          {config.social_links.map((social) => (
+            <a 
+              href={social.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="w-10 h-10 bg-[#2a4365] hover:bg-[#22c55e] rounded-lg flex items-center justify-center transition-all duration-200 hover:-translate-y-1"
+              aria-label={social.name}
+            >
+              <Icon name={`mdi:${social.icon}`} class="w-5 h-5 text-white" />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-lg font-bold mb-6 text-white uppercase tracking-wider">Quick Links</h4>
+        <ul class="space-y-3">
+          {config.navigation.slice(0, 6).map((item) => (
+            <li>
+              <a 
+                href={item.url} 
+                class="text-gray-400 hover:text-[#22c55e] transition-colors duration-200 flex items-center space-x-2 group font-medium"
+              >
+                <Icon name={`mdi:${item.icon || 'arrow-right'}`} class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+                <span>{item.label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h4 class="text-lg font-bold mb-6 text-white uppercase tracking-wider">Contact Us</h4>
+        <div class="space-y-4">
+          <div class="flex items-start space-x-3">
+            <div class="w-8 h-8 bg-[#2a4365] rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+              <Icon name="mdi:map-marker" class="w-4 h-4 text-[#22c55e]" />
+            </div>
+            <div>
+              <p class="text-gray-400 text-sm leading-relaxed font-medium">
+                {config.organization.address}
+              </p>
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-3">
+            <div class="w-8 h-8 bg-[#2a4365] rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+              <Icon name="mdi:email" class="w-4 h-4 text-[#22c55e]" />
+            </div>
+            <div>
+              <a href={`mailto:${config.contact.email}`} class="text-gray-400 hover:text-[#22c55e] transition-colors duration-200 text-sm font-medium">
+                {config.contact.email}
+              </a>
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-3">
+            <div class="w-8 h-8 bg-[#2a4365] rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+              <Icon name="mdi:phone" class="w-4 h-4 text-[#22c55e]" />
+            </div>
+            <div>
+              <a href={`tel:${config.contact.phone}`} class="text-gray-400 hover:text-[#22c55e] transition-colors duration-200 text-sm font-medium">
+                {config.contact.phone}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    {config.features.newsletter && (
+      <div class="border-t border-[#2a4365] pt-8 mb-8">
+        <div class="max-w-2xl mx-auto text-center">
+          <h4 class="text-xl font-bold mb-4 text-white">Stay Connected</h4>
+          <p class="text-gray-400 mb-6 font-medium">
+            Subscribe to our newsletter for the latest updates, events, and alumni news.
+          </p>
+          <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input 
+              type="email" 
+              placeholder="Enter your email" 
+              class="flex-1 px-4 py-3 rounded-lg bg-[#102a43] border border-[#2a4365] text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e] transition-all duration-200"
+              required
+            />
+            <button 
+              type="submit" 
+              class="bg-[#22c55e] text-white hover:bg-[#16a34a] px-6 py-3 rounded-lg font-bold whitespace-nowrap transition-colors"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    )}
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-[#2a4365] pt-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="text-gray-500 text-sm text-center md:text-left font-medium">
+          <p>
+            © {currentYear} {config.organization.name}. All rights reserved.
+          </p>
+        </div>
+        
+        <div class="flex items-center space-x-6 text-sm font-medium">
+          <a href="/privacy" class="text-gray-500 hover:text-[#22c55e] transition-colors duration-200">
+            Privacy Policy
+          </a>
+          <a href="/terms" class="text-gray-500 hover:text-[#22c55e] transition-colors duration-200">
+            Terms of Service
+          </a>
+          <a href="/about" class="text-gray-500 hover:text-[#22c55e] transition-colors duration-200">
+            About
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Newsletter form handling
+  const newsletterForm = document.querySelector('form');
+  
+  newsletterForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = e.target.querySelector('input[type="email"]').value;
+    
+    // Hackathon demo alert
+    alert('Thanks for subscribing! (Note: This is a hackathon demo UI, backend integration pending.)');
+    e.target.reset();
+  });
+</script>
