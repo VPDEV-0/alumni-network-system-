@@ -29,8 +29,8 @@ A production-ready, open source alumni portal theme / template designed for coll
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/noskofficial/openalumns.git
-   cd open-alumns-portal
+  
+  
    ```
 
 2. **Install dependencies**
