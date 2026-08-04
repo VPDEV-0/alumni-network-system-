@@ -292,23 +292,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- **NOSK (Nepal Open Source Klub)** - Lead organization
-- **Astro Team** - Amazing static site generator
-- **Tailwind CSS** - Utility-first CSS framework
-- **Community Contributors** - Everyone who helps improve this project
+
 
 ## 📞 Support
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/noskofficial/openalumns/issues)
-- **Discussions**: [Join community discussions](https://github.com/noskofficial/openalumns/discussions)
-- **Email**: info@nosk.org.np
+
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=noskofficial/openalumns&type=Date)](https://star-history.com/#noskofficial/openalumns&Date)
+
 
 ---
 
-Made with ❤️ by [NOSK](https://nosk.org.np) and the open source community.
 
-If this project helps you, please give it a ⭐️!
